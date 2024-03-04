@@ -9,7 +9,10 @@ module.exports = {
     extend: {
       colors: {
         echoOrange: "#ff824c",
-        echoGrey: "#b2aaa1",
+        echoWhite: "#ffff",
+        echoBorder: "#2f3336",
+        echoLightGray: "#71767b",
+        echoDarkGray: "#17181c",
       },
     },
   },
