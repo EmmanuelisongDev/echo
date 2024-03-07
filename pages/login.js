@@ -1,9 +1,16 @@
 import { getProviders, signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { FcGoogle } from "react-icons/fc";
 export default function LoginPage({ providers }) {
   const { data, status } = useSession();
+  const router = useRouter();
+  if (status === "loading") {
+    return "";
+  }
+  if (data) {
+    router.push("/");
+  }
 
-  console.log(`Data:`, data, `Status:`, status);
   return (
     <div className="flex items-center justify-center h-screen">
       {Object.values(providers).map((provider) => (

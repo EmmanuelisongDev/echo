@@ -2,7 +2,6 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from "../../../lib/mongodb";
-import { signIn } from "next-auth/react";
 
 export const authOptions = {
   adapter: MongoDBAdapter(clientPromise),
@@ -19,9 +18,8 @@ export const authOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    session: async ({ token: JWT, session: Session }) => {
+    session: async ({ token, session }) => {
       if (session?.user && token?.sub) {
-        console.log(token.sub);
         session.user.id = token.sub;
       }
       return session;
