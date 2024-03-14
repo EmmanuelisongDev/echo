@@ -1,6 +1,9 @@
+import { SupabaseAdapter } from '@auth/supabase-adapter';
 import { NextApiHandler } from 'next';
 import NextAuth from 'next-auth';
-import GoogleProvider from 'next-auth/providers/google';
+import { Adapter } from 'next-auth/adapters';
+import GoogleProvider from "next-auth/providers/google";
+
 
 interface HandlerOptions {
   clientId: string;
@@ -14,6 +17,10 @@ const handler: NextApiHandler = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     } as HandlerOptions),
   ],
+  adapter: SupabaseAdapter({
+    url: process.env.NEXT_PUBLIC_SUPABASE_URL as string,
+    secret: process.env.SUPABASE_SERVICE_ROLE_KEY as string,
+  }) as Adapter,
 });
 
 export { handler as GET, handler as POST };
