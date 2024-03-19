@@ -3,6 +3,7 @@ import { NextApiHandler } from 'next';
 import NextAuth from 'next-auth';
 import { Adapter } from 'next-auth/adapters';
 import GoogleProvider from "next-auth/providers/google";
+import { NextAuthOptions } from 'next-auth';
 
 
 interface HandlerOptions {
@@ -10,7 +11,7 @@ interface HandlerOptions {
   clientSecret: string;
 }
 
-const handler: NextApiHandler = NextAuth({
+const authOptions: NextAuthOptions = NextAuth({
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -22,5 +23,5 @@ const handler: NextApiHandler = NextAuth({
     secret: process.env.SUPABASE_SERVICE_ROLE_KEY as string,
   }) as Adapter,
 });
-
+const handler = NextAuth(authOptions)
 export { handler as GET, handler as POST };
